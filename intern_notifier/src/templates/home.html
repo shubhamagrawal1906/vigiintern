@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{%block style %}{{block.super}}
+body{
+	background-color:#f8f8f8;
+}
+#div_id_domain label{
+	font-size:150%
+}
+
+.checkbox{
+	font-size: 75%;
+}
+#div_id_domain div{
+	padding:3px;
+}
+{% endblock %}
+
+{% block title %}{{block.super}} | {{ title }}{% endblock %}
+<!-- Main component for a primary marketing message or call to action -->
+
+{% block jumbotron %}
+	{% if request.user.is_authenticated %}
+		
+	{% else %}
+		<div class="jumbotron">
+		<h1>Navbar example</h1>
+		<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+		<p>To see the difference between static and fixed top navbars, just scroll.</p>
+		<p>
+		<a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+		</p>
+		</div>
+	{% endif %}
+{% endblock %}
+
+
+{% block content %}
+	{% if request.user.is_authenticated %}
+		<div class="col-sm-2 col-md-2 sidebar">
+			<div class="col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1" style="margin-top: 30px;">
+				<p id="alert" style="color: #cc0000"></p>
+				<form role="form" action="" method="POST">
+					{% csrf_token %}
+					{{ form|crispy }}
+				</form>
+			</div>
+		</div><!-- sidebar -->
+		
+		<div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-1 main">
+			<h1 class="lead">{{ title }}</h1>
+			<div class="col-sm-8 col-md-8" style="padding: 10px;">
+				{% for list_item in list%}
+						<div style="border-radius: 10px;min-height: 300px;width: 100%;background-color: white;box-shadow: 0px 0px 10px #888888;">
+							<div style="height: 50px;background-color: #efefef;border-top-left-radius: 10px;border-top-right-radius: 10px;"></div>
+							<div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1" style="min-height: 170px;margin-top: 10px;margin-bottom: 10px;">
+								<h2 style="color: #00a000;"><strong>{{ list_item }}</strong></h2>
+								<p>You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.You are searching intern in {{ list_item }}.	</p>
+							</div>
+							<div class="col-sm-10 col-md-1" style="min-height: 170px;margin-top: 10px;margin-bottom: 10px;"></div>
+							<div class="col-sm-12 col-md-12" style="margin-bottom: 10px;min-height: 50px">
+								<a href="domain?title={{ list_item }}"><input class="btn btn-lg btn-success" type="submit" value="View" style="float: right;width: 200px;"></input></a>
+							</div>
+						</div>
+						<br/><br/>
+				{% endfor %}
+			</div>
+			<div class="col-sm-4 col-md-4" style="padding: 10px;float: right;position: relative;">
+				<div class="col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1" style="border-radius: 10px;box-shadow: 0px 0px 10px #888888;min-height: 280px;background-color: #ffffff;">
+					<center><h3><b>Internship</b></h3></center>
+				</div>
+			</div>
+		</div><!-- main -->
+
+	{% else %}
+	<div>
+
+	</div>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block style %}{{ block.super }}
+	#div_id_profileimage{
+		margin-top:0px;
+		margin-bottom: 75px;
+		padding-left: 200px;
+	}
+{% endblock %}
+
+{% block title %}{{block.super}} | {{ title }}{% endblock %}
+
+{% block content %}
+	
+	<h1 class="lead">{{ title }} </h1>
+	<div class="col-md-12">
+		<h1 ><span style="float: right;">{{ request.user }}</span></h1>
+	</div>
+	<form role="form" action="" method="POST" enctype="multipart/form-data"> 
+		{% csrf_token %}
+		<img src="{{ profile }}" style="height:150px;width:150px;float:left;margin-bottom: 10px;" alt="Profile image" class="img-responsive img-thumbnail" id="img-image-profile">
+		{{ form|crispy }}
+		<input class="btn btn-default" type="reset" value="Reset"></input>
+		<input class="btn btn-default" type="submit" value="Submit"></input>
+	</form>
+{% endblock %}

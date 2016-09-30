@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block title %}{{block.super}} | {{ title }}{% endblock %}
+
+{% block content %}
+	<h1 class="lead">{{ title }}</h1>
+	<p>This is about us.</p>	
+{% endblock %}

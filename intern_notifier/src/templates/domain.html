@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block style %}{{block.super}}
+body{
+	background-color:#f8f8f8;
+}
+.main{
+	padding:0px;
+}
+.domain-list p a:hover{	
+    color: #606060;
+}
+.domain-list p a{
+	font-size: 120%;
+	color: #888888;
+	text-decoration:none;
+}
+
+.sidebar{
+	border-right: 1px solid #eee;
+}
+.pagination span{
+	margin:10px;
+}
+.active{
+	color: lightgreen;
+}
+#domain-change-link, #previous, #next{
+	color: #00a000;
+}
+{% endblock %}
+{% block title %}{{block.super}} | {{ title }}{% endblock %}
+
+{% block content %}
+	<div class="col-sm-3 col-md-2 sidebar">
+		<div class="col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0" style="margin-top: 30px;">
+			<div class="domain-list">
+				<h3 style="padding-left: 20px;"><strong>Domain</strong></h3>
+				
+					{% for list_item in list %}
+						{% ifequal title list_item %}
+							<b><span style="background-color: #606060;width: 5px;height: 20px;float: left;margin-top: 1px;"></span><p style="padding-left: 20px;"><a href="domain?title={{ list_item }}" style="color: #606060;">{{ list_item }}</a></p></b>
+							{% else %}
+							<b><p style="padding-left: 20px;"><a href="domain?title={{ list_item }}">{{ list_item }}</a></p></b>
+						{% endifequal %}
+					{% endfor %}
+					<a href="{% url 'home' %}" id = "domain-change-link">Change Domain</a>
+				
+			</div>
+			
+		</div>
+	</div><!-- sidebar-->
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h1 class="lead">{{ title }}</h1>
+		<div class="col-md-12" style="min-height: 500px;">
+			{% for detail in details %}
+				<div class="col-md-12" style="border-radius: 3px;border: 1px solid #cccccc;min-height: 130px;margin-top: 30px;">
+					<div class="col-md-12" style="margin-top: 5px">
+						<h3><b>{{ detail.firstname }} {{ detail.lastname }}</b></h3>
+					</div>
+					<div class="col-md-10" style="font-size: 120%;margin-top: 15px">
+						<p style="padding-top: 10px;">Offered by : Company | Deadline : 30 May, 2016</p>
+					</div>
+					<div class="col-md-2" style="font-size: 120%;margin-top: 15px">
+						<a href=""><input class="btn btn-success" type="submit" value="View" style="width: 125px;"></input></a>
+					</div>
+				</div>
+			{% endfor%}
+			<center>
+				<div class="pagination">
+					{% if details.has_previous %}
+						<span ><a href="domain?title={{ title }}&page={{ details.previous_page_number }}"id ="previous">Previous</a></span>
+					{% endif %}
+					<span class="current">
+						Page {{ details.number }} of {{ details.paginator.num_pages }}
+					</span>
+
+					{% if details.has_next %}
+						<span ><a href="domain?title={{ title }}&page={{ details.next_page_number }}" id ="next">Next</a></span>
+					{% endif %}
+				</div>
+			</center>
+
+		</div>
+		
+	</div><!-- main -->
+{% endblock %}
